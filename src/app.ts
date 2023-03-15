@@ -42,7 +42,7 @@ const getBusArrivalTime = async (input: string[]): Promise<string> => {
     let message = "Something unexpectedly happened :(";
     if (axios.isAxiosError(error)) {
       const axiosError: AxiosError = error as AxiosError;
-      message = get(axiosError.response?.data, 'Message', message);
+      message = get(axiosError.response?.data, "Message", message);
     }
     return message;
   }
