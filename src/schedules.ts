@@ -58,11 +58,11 @@ export const getNearby = async (
     const res = await axios({ method: "get", url });
     const data: any[] = res.data || [];
     const opts: any[] = [];
-    data.forEach((daton) => {
-      const routes: string = get(daton, "Routes");
+    data.forEach((datum) => {
+      const routes: string = get(datum, "Routes");
       if (!isEmpty(routes)) {
-        const stopId: number = get(daton, "StopNo");
-        const distance: number = get(daton, "Distance");
+        const stopId: number = get(datum, "StopNo");
+        const distance: number = get(datum, "Distance");
         const busIdList: string[] = routes.split(",");
         busIdList.forEach((busId: string) => {
           opts.push({
