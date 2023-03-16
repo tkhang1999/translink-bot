@@ -62,19 +62,26 @@ export const getNearby = async (
       const routes: string = get(daton, "Routes");
       if (!isEmpty(routes)) {
         const stopId: number = get(daton, "StopNo");
+        const distance: number = get(daton, "Distance");
         const busIdList: string[] = routes.split(",");
         busIdList.forEach((busId: string) => {
-          opts.push(Markup.button.text(`${busId.trim()} ${stopId}`));
+          opts.push({
+            text: `${busId.trim()} ${stopId}`,
+            hide: false,
+            properties: { busId: busId.trim(), distance },
+          });
         });
       }
     });
-
     const message =
       opts.length === 0
         ? "No neaby bus stop or schedule found!"
-        : "Please select one of the provided options";
+        : "Please select one of the provided options (sorted by bus ID and distance to your current location)";
 
-    return { message, options: sortBy(opts, "text") };
+    return {
+      message,
+      options: sortBy(opts, ["properties.busId", "properties.distance"]),
+    };
   } catch (error) {
     console.log(error);
     let message = "Something unexpectedly happened :(";
