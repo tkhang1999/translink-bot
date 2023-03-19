@@ -6,6 +6,9 @@ import { getBusArrivalTime, getNearby, NearbyResponse } from "./schedules";
 
 dotenv.config();
 
+const webhookDomain: string = process.env.DOMAIN || "";
+const port: number = parseInt(process.env.PORT || "3000");
+
 const bot: Telegraf<Context<Update>> = new Telegraf(
   process.env.BOT_TOKEN as string
 );
@@ -42,4 +45,6 @@ bot.on(message("text"), async (ctx) => {
   return ctx.reply(await getBusArrivalTime(input));
 });
 
-bot.launch();
+bot
+  .launch({ webhook: { domain: webhookDomain, port: port } })
+  .then(() => console.log("Webhook bot listening on port", port));

@@ -1,6 +1,5 @@
 import axios, { AxiosError } from "axios";
 import { get, isEmpty, sortBy } from "lodash";
-import { Markup } from "telegraf";
 import { Location } from "telegraf/typings/core/types/typegram";
 
 export const getBusArrivalTime = async (input: string[]): Promise<string> => {
