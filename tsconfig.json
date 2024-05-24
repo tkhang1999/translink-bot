@@ -6,7 +6,7 @@
     "moduleResolution": "node",
     "strict": true,
     "sourceMap": true,
-    "lib": ["es2021"],
+    "lib": ["es2021", "DOM"],
     "skipLibCheck": true,
     "rootDir": "src",
     "outDir": "dist"
