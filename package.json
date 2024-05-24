@@ -18,6 +18,7 @@
     "axios": "^1.6.0",
     "dotenv": "^16.0.3",
     "lodash": "^4.17.21",
+    "moment-timezone": "^0.5.45",
     "telegraf": "^4.12.2"
   },
   "devDependencies": {
