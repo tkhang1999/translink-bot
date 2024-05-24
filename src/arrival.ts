@@ -24,7 +24,7 @@ export const getBusArrivalTime = async (input: string[]): Promise<string> => {
 
     let message = `Bus ${busId} at stop ${stopId}:\n`;
     data.map((entry: any) => {
-      let next: Moment = moment(`${date} ${entry.dt}`).tz("America/Vancouver");
+      let next: Moment = moment.tz(`${date} ${entry.dt}`, "America/Vancouver");
       let diff: number = next.diff(current, "minutes");
       if (diff < -10) {
         next = next.add(1, "days");
