@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import moment, { Moment } from "moment-timezone";
-import { get, sortBy } from "lodash";
+import { get } from "lodash";
 
 export const getBusArrivalTime = async (input: string[]): Promise<string> => {
   if (input.length !== 2) {
@@ -24,9 +24,10 @@ export const getBusArrivalTime = async (input: string[]): Promise<string> => {
     let message = `Bus ${busId} at stop ${stopId}:\n`;
     data.forEach((entry: any) => {
       message += `\n--- ${entry.rs} ${entry.hs} ---`;
-      sortBy(get(entry, "t", []), ["dt"]).forEach((arrival: any) => {
-        const time: string =
-          arrival.dt.length === 4 ? `0${arrival.dt}` : arrival.dt;
+      const arrivals: string[] = get(entry, "t", []).map((arrival: any) =>
+        arrival.dt.length === 4 ? `0${arrival.dt}` : arrival.dt
+      );
+      arrivals.sort().forEach((time: any) => {
         let next: Moment = moment.tz(`${date} ${time}`, "America/Vancouver");
         let diff: number = next.diff(current, "minutes");
         if (diff < -10) {
