@@ -24,10 +24,17 @@ export const getBusArrivalTime = async (input: string[]): Promise<string> => {
     let message = `Bus ${busId} at stop ${stopId}:\n`;
     data.forEach((entry: any) => {
       message += `\n--- ${entry.rs} ${entry.hs} ---`;
-      const arrivals: string[] = get(entry, "t", []).map((arrival: any) =>
-        arrival.dt.length === 4 ? `0${arrival.dt}` : arrival.dt
-      );
-      arrivals.sort().forEach((time: any) => {
+
+      const arrivals: string[] = get(entry, "t", []).map((arrival: any) => {
+        let time: string = arrival.dt;
+        const hour: number = parseInt(time.split(":")[0]);
+        if (hour >= 24) {
+          time = `${hour - 24}:${time.split(":")[1]}`;
+        }
+        return time.length === 4 ? `0${time}` : time;
+      });
+
+      arrivals.sort().forEach((time: string) => {
         let next: Moment = moment.tz(`${date} ${time}`, "America/Vancouver");
         let diff: number = next.diff(current, "minutes");
         if (diff < -10) {
