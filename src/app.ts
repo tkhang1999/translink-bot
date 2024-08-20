@@ -1,14 +1,11 @@
-import { Context, Telegraf } from "telegraf";
-import { Update } from "typegram";
+import { Telegraf } from "telegraf";
 import { message } from "telegraf/filters";
 import dotenv from "dotenv";
 import { getBusArrivalTime } from "./arrival";
 
 dotenv.config();
 
-const bot: Telegraf<Context<Update>> = new Telegraf(
-  process.env.BOT_TOKEN as string
-);
+const bot: Telegraf = new Telegraf(process.env.BOT_TOKEN as string);
 
 bot.start((ctx) => {
   const message = `Welcome! Please reply with the below format to query bus arrival time:
