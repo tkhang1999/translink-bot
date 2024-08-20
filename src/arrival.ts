@@ -21,12 +21,16 @@ export const getBusArrivalTime = async (input: string[]): Promise<string> => {
 
     const current: Moment = moment().tz("America/Vancouver");
     const date: string = current.format("YYYY-MM-DD");
-    let message = `Bus ${busId} at stop ${stopId}:\n`;
+    let message = `Bus ${busId} at stop ${stopId}:`;
     data.forEach((entry: any) => {
       message += `\n\n--- ${entry.hs} ---`;
-      const arrivals: string[] = get(entry, "t", []).map((arrival: any) =>
-        arrival.dt.length === 4 ? `0${arrival.dt}` : arrival.dt
-      );
+      const arrivals: string[] = get(entry, "t", []).map((arrival: any) => {
+        const hour: number = parseInt(arrival.dt.substring(0, 2));
+        if (hour >= 24) {
+          arrival.dt = `${hour - 24}${arrival.dt.substring(2)}`;
+        }
+        return arrival.dt.length === 4 ? `0${arrival.dt}` : arrival.dt;
+      });
       arrivals.sort().forEach((time: any) => {
         let next: Moment = moment.tz(`${date} ${time}`, "America/Vancouver");
         let diff: number = next.diff(current, "minutes");

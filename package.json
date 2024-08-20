@@ -19,7 +19,8 @@
     "dotenv": "^16.0.3",
     "lodash": "^4.17.21",
     "moment-timezone": "^0.5.45",
-    "telegraf": "^4.12.2"
+    "telegraf": "^4.12.2",
+    "translink-bot": "file:"
   },
   "devDependencies": {
     "@types/node": "^18.15.3",
