@@ -23,7 +23,7 @@ export const getBusArrivalTime = async (input: string[]): Promise<string> => {
     const date: string = current.format("YYYY-MM-DD");
     let message = `Bus ${busId} at stop ${stopId}:\n`;
     data.forEach((entry: any) => {
-      message += `\n--- ${entry.rs} ${entry.hs} ---`;
+      message += `\n\n--- ${entry.hs} ---`;
       const arrivals: string[] = get(entry, "t", []).map((arrival: any) =>
         arrival.dt.length === 4 ? `0${arrival.dt}` : arrival.dt
       );
