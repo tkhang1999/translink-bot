@@ -14,22 +14,22 @@
   "author": "Khang Le",
   "license": "ISC",
   "dependencies": {
-    "@types/lodash": "^4.14.191",
-    "axios": "^1.7.4",
+    "@types/lodash": "^4.17.13",
+    "axios": "^1.7.7",
     "dotenv": "^16.0.3",
     "lodash": "^4.17.21",
-    "moment-timezone": "^0.5.45",
+    "moment-timezone": "^0.5.46",
     "telegraf": "^4.16.3",
     "translink-bot": "file:"
   },
   "devDependencies": {
-    "@types/node": "^22.4.1",
-    "@typescript-eslint/eslint-plugin": "^8.2.0",
-    "@typescript-eslint/parser": "^8.2.0",
-    "eslint": "^9.9.0",
-    "nodemon": "^3.1.4",
+    "@types/node": "^22.8.7",
+    "@typescript-eslint/eslint-plugin": "^8.13.0",
+    "@typescript-eslint/parser": "^8.13.0",
+    "eslint": "^9.14.0",
+    "nodemon": "^3.1.7",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.1",
-    "typescript": "^5.5.4"
+    "typescript": "^5.6.3"
   }
 }
