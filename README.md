@@ -24,6 +24,6 @@ $ npx nodemon src/app.ts
 
 ## How to use?
 
-The bot is available at [https://t.me/DummyTransitBot](https://t.me/DummyTransitBot)
+The bot is available at [https://t.me/TransLinkBot](https://t.me/TransLinkBot)
 
 ![image](https://user-images.githubusercontent.com/42204888/225764750-cd05728d-0cb7-4dff-8ca6-c72d9701d80c.png)
