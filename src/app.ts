@@ -1,7 +1,9 @@
-import { Telegraf } from "telegraf";
+import { Markup, Telegraf } from "telegraf";
 import { message } from "telegraf/filters";
 import dotenv from "dotenv";
 import { getBusArrivalTime } from "./arrival";
+import { Location } from "telegraf/typings/core/types/typegram";
+import { getNearby, NearbyResponse } from "./nearby";
 
 dotenv.config();
 
@@ -11,6 +13,25 @@ bot.start((ctx) => {
   const message = `Welcome! Please reply with the below format to query bus arrival time:
 "<bus_id> <bus_stop_id>" (e.g. "145 59314")`;
   ctx.reply(message);
+});
+
+bot.command("nearby", async (ctx) => {
+  return ctx.reply(
+    "Please share your location",
+    Markup.keyboard([Markup.button.locationRequest("Send location")])
+      .resize(true)
+      .oneTime(true),
+  );
+});
+
+bot.on(message("location"), async (ctx) => {
+  const location: Location.CommonLocation = ctx.message.location;
+  const nearbyResponse: NearbyResponse = await getNearby(location);
+
+  ctx.reply(
+    nearbyResponse.message,
+    Markup.keyboard(nearbyResponse.options).resize(true).oneTime(false),
+  );
 });
 
 bot.on(message("text"), async (ctx) => {
