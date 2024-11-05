@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import haversine from "haversine-distance";
-import { get, sortBy } from "lodash";
+import { get, sortBy, uniqBy } from "lodash";
 import moment, { Moment } from "moment-timezone";
 import { Location } from "telegraf/typings/core/types/typegram";
 
@@ -18,25 +18,26 @@ export const getNearby = async (
     const res = await axios({ method: "get", url });
     const stops: any[] = get(res, "data", []);
 
-    const nearbyStops = stops
-      .map((stop: any) => {
-        const dist: number = haversine(
-          { latitude: stop.la, longitude: stop.lo },
-          { latitude: location.latitude, longitude: location.longitude },
-        );
-        return { ...stop, dist };
-      })
-      .filter((stop: any) => stop.dist < 500)
-      .sort((a: any, b: any) => a.dist - b.dist);
+    const nearbyStops: Map<String, Number> = new Map();
+    stops.forEach((stop: any) => {
+      const dist: number = haversine(
+        { latitude: stop.la, longitude: stop.lo },
+        { latitude: location.latitude, longitude: location.longitude },
+      );
+
+      if (dist <= 500) {
+        nearbyStops.set(stop.sc, dist);
+      }
+    });
 
     const current: Moment = moment().tz("America/Vancouver");
     const date: string = current.format("YYYY-MM-DD");
-    const stopsAndBusIds = (
+    const stopsAndBusIds: any[] = (
       await Promise.all(
-        nearbyStops.map((stop: any) => {
+        Array.from(nearbyStops.keys()).map((stopId: any) => {
           return axios({
             method: "get",
-            url: `https://getaway.translink.ca/api/gtfs/stop/${stop.sc}/schedules/${date}`,
+            url: `https://getaway.translink.ca/api/gtfs/stop/${stopId}/schedules/${date}`,
           });
         }),
       )
@@ -48,6 +49,10 @@ export const getNearby = async (
         opts.push({
           text: `${route.rs.trim()} ${stop.sc.trim()}`,
           hide: false,
+          properties: {
+            busId: route.rs.trim(),
+            dist: nearbyStops.get(stop.sc),
+          },
         });
       });
     });
@@ -55,11 +60,14 @@ export const getNearby = async (
     const message =
       opts.length === 0
         ? "No nearby bus stop or schedule found!"
-        : "Please select one of the provided options";
+        : "Please select one of the provided options (sorted by bus ID and distance to your current location)";
 
     return {
       message,
-      options: sortBy(opts, ["text"]),
+      options: sortBy(uniqBy(opts, "text"), [
+        "properties.busId",
+        "properties.dist",
+      ]),
     };
   } catch (error) {
     console.log(error);
