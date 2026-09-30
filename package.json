@@ -9,7 +9,7 @@
   "scripts": {
     "postinstall": "tsc",
     "start": "node dist/app.js",
-    "test": "node --require ts-node/register --test src/arrival.test.ts",
+    "test": "tsc && node --test dist/arrival.test.js",
     "prettier": "prettier --write ."
   },
   "author": "Khang Le",
@@ -26,9 +26,6 @@
   },
   "devDependencies": {
     "@types/node": "^26.6.3",
-    "@typescript-eslint/eslint-plugin": "^8.71.0",
-    "@typescript-eslint/parser": "^8.71.0",
-    "eslint": "^10.11.0",
     "nodemon": "^3.1.14",
     "prettier": "^3.9.9",
     "ts-node": "^10.9.1",

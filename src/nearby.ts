@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import haversine from "haversine-distance";
 import { get, sortBy, uniqBy } from "lodash";
 import moment, { Moment } from "moment-timezone";
-import { Location } from "telegraf/typings/core/types/typegram";
+import { Location } from "telegraf/types";
 
 export interface NearbyResponse {
   message: string;

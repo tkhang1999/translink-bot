@@ -2,7 +2,7 @@ import { Markup, Telegraf } from "telegraf";
 import { message } from "telegraf/filters";
 import dotenv from "dotenv";
 import { getBusArrivalTime } from "./arrival";
-import { Location } from "telegraf/typings/core/types/typegram";
+import { Location } from "telegraf/types";
 import { getNearby, NearbyResponse } from "./nearby";
 
 dotenv.config();
