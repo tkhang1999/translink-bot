@@ -12,7 +12,7 @@ const bot: Telegraf = new Telegraf(process.env.BOT_TOKEN as string);
 bot.start((ctx) => {
   const message: string = `Welcome! Please use the command /nearby to find nearby bus stops and schedules.\n
 Or reply with the below format to query bus arrival time:
-"<bus_id> <bus_stop_id>" (e.g. "145 59314")`;
+"<bus_id> <bus_stop_id>" (e.g. "28 51671")`;
   ctx.reply(message);
 });
 
